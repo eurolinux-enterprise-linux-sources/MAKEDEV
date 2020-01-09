@@ -1,0 +1,24 @@
+#!//bin/sh
+maj=116
+for card in 0 1 2 3 ; do
+        min=`expr $card \* 32`
+	printf 'c $CONSOLE            %4s %3s  1   1 snd/controlC%s\n' $maj $min $card
+	printf 'c $CONSOLE            %4s %3s  1   1 aloadC%s\n' $maj $min $card
+	for hwdev in 0 1 2 3 ; do
+	    min=`expr $card \* 32 + 4 + $hwdev`
+	    printf 'c $CONSOLE            %4s %3s  1   1 snd/hwC%sD%s\n' $maj $min $card $hwdev
+        done
+	for midi in 0 1 2 3 4 5 6 7 ; do
+	    min=`expr $card \* 32 + 8 + $midi`
+	    printf 'c $CONSOLE            %4s %3s  1   1 snd/midiC%sD%s\n' $maj $min $card $midi
+        done
+	for pcm in 0 1 2 3 4 5 6 7 ; do
+	    minp=`expr $card \* 32 + 16 + $pcm`
+	    minc=`expr $card \* 32 + 24 + $pcm`
+	    printf 'c $CONSOLE            %4s %3s  1   1 snd/pcmC%sD%sc\n' $maj $minc $card $pcm
+	    printf 'c $CONSOLE            %4s %3s  1   1 snd/pcmC%sD%sp\n' $maj $minp $card $pcm
+        done
+done
+printf 'c $CONSOLE            %4s %3s  1   1 snd/seq\n' $maj "1"
+printf 'c $CONSOLE            %4s %3s  1   1 snd/timer\n' $maj "33"
+printf 'c $CONSOLE            %4s %3s  1   1 aloadSEQ\n' $maj "1"

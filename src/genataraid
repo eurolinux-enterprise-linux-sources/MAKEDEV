@@ -1,0 +1,8 @@
+#!//bin/sh
+maj=114
+for disk in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+for part in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+	min=`expr $disk \* 16 + $part`
+	printf 'b $STORAGE            %4s %3s  1   1 ataraid/d%sp%s\n' $maj $min $disk $part | sed 's/p0$//g'
+done
+done

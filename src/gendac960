@@ -1,0 +1,9 @@
+#!//bin/sh
+for ctr in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+	if [ $ctr -lt 8 ] ; then
+		maj=`expr $ctr + 48`
+	else
+		maj=`expr $ctr - 8 + 136`
+	fi
+	printf 'b $STORAGE            %4s 0    1 256 rd/c%sd%%d%%|p%%d 0 8\n' $maj $ctr
+done
